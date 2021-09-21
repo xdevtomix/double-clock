@@ -129,10 +129,10 @@ export default function Clock() {
             <div className="clock__container grid">
                 <div className="clock__content grid">
                     <div className="clock__circle">
-                        <span className="clock__twelve"></span>
-                        <span className="clock__three"></span>
-                        <span className="clock__six"></span>
-                        <span className="clock__nine"></span>
+                        <ClockLine which="twelve"></ClockLine>
+                        <ClockLine which="three"></ClockLine>
+                        <ClockLine which="six"></ClockLine>
+                        <ClockLine which="nine"></ClockLine>
 
                         <div className="clock__rounder"></div>
                         <ClockHoursContainer hoursDeg={hoursDeg}>
@@ -179,6 +179,24 @@ const Container = styled.div`
         margin-left: auto;
         margin-right: auto;
     }
+`;
+
+const ClockLine = styled.div`
+    position: absolute;
+    width: 1rem;
+    height: 1px;
+    background-color: var(--text-color-light);
+    ${({which}) => {
+        if (which === 'twelve') {
+            return 'top: 1.25rem; left: 50%; transform: translateX(-50%) rotate(90deg);';
+        } else if (which === 'three') {
+            return 'top: 50%; right: .75rem;';
+        } else if (which === 'six') {
+            return 'bottom: 1.25rem; left: 50%; transform: translateX(-50%) rotate(90deg);';
+        } else if (which === 'nine') {
+            return 'left: .75rem; top: 50%;';
+        }
+    }}  
 `;
 
 const ClockHoursContainer = styled.div`
