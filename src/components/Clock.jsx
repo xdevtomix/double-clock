@@ -1,27 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 
 export default function Clock() {
+    const [hoursDeg, setHoursDeg] = useState(0);
+    const [minutesDeg, setMinutesDeg] = useState(0);
+    const [secondsDeg, setSecondsDeg] = useState(0);
+
     useEffect(() => {
-        /*==================== CLOCK ====================*/
-        const hour = document.getElementById('clock-hour'),
-            minutes = document.getElementById('clock-minutes'),
-            seconds = document.getElementById('clock-seconds')
+        let intervalId = -1;
 
-        const clock = () => {
-            let date = new Date()
+        const runClock = () => {
+            const date = new Date();
+            const hDeg = date.getHours() * 30;
+            const mDeg = date.getMinutes() * 6;
+            const sDeg = date.getSeconds() * 6;
 
-            let hh = date.getHours() * 30,
-                mm = date.getMinutes() * 6,
-                ss = date.getSeconds() * 6
+            setHoursDeg(hDeg + mDeg / 12);
+            setMinutesDeg(mDeg);
+            setSecondsDeg(sDeg);
+        };
 
-            // We add a rotation to the elements
-            hour.style.transform = `rotateZ(${hh + mm / 12}deg)`
-            minutes.style.transform = `rotateZ(${mm}deg)`
-            seconds.style.transform = `rotateZ(${ss}deg)`
-        }
-        setInterval(clock, 1000) // 1000 = 1s
-        return () => { };
+        intervalId = setInterval(runClock, 1000);
+
+        runClock();
+
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     useEffect(() => {
@@ -85,6 +90,7 @@ export default function Clock() {
         }
         setInterval(clockText, 1000) // 1000 = 1s
 
+        clockText();
         /*==================== DARK/LIGHT THEME ====================*/
         const themeButton = document.getElementById('theme-button')
         const darkTheme = 'dark-theme'
@@ -129,15 +135,15 @@ export default function Clock() {
                         <span className="clock__nine"></span>
 
                         <div className="clock__rounder"></div>
-                        <div className="clock__hour" id="clock-hour">
-                            <div className="clock__hour_inner"></div>
-                        </div>
-                        <div className="clock__minutes" id="clock-minutes">
-                            <div className="clock__minutes_inner"></div>
-                        </div>
-                        <div className="clock__seconds" id="clock-seconds">
-                            <div className="clock__seconds_inner"></div>
-                        </div>
+                        <ClockHoursContainer hoursDeg={hoursDeg}>
+                            <ClockHoursHand />
+                        </ClockHoursContainer>
+                        <ClockMinutesContainer minutesDeg={minutesDeg}>
+                            <ClockMinutesHand />
+                        </ClockMinutesContainer>
+                        <ClockSecondsContainer secondsDeg={secondsDeg}>
+                            <ClockSecondsHand />
+                        </ClockSecondsContainer>
 
                         <div className="clock__theme">
                             <i className='bx bxs-moon' id="theme-button"></i>
@@ -173,6 +179,60 @@ const Container = styled.div`
         margin-left: auto;
         margin-right: auto;
     }
+`;
+
+const ClockHoursContainer = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 105px;
+    height: 105px;
+    ${(props) => `transform: rotateZ(${props.hoursDeg}deg)`}
+`;
+
+const ClockHoursHand = styled.div`
+    position: absolute;
+    background-color: var(--text-color);
+    width: .25rem;
+    height: 3rem;
+    border-radius: .75rem;
+    z-index: var(--z-normal);
+`;
+
+const ClockMinutesContainer = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 136px;
+    height: 136px;
+    ${(props) => `transform: rotateZ(${props.minutesDeg}deg)`}
+`;
+
+const ClockMinutesHand = styled.div`
+    position: absolute;
+    background-color: var(--text-color);
+    width: .25rem;
+    height: 4rem;
+    border-radius: .75rem;
+    z-index: var(--z-normal);
+`;
+
+const ClockSecondsContainer = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    height: 130px;
+    ${(props) => `transform: rotateZ(${props.secondsDeg}deg)`}
+`;
+
+const ClockSecondsHand = styled.div`
+    position: absolute;
+    background-color: var(--first-color);
+    width: .125rem;
+    height: 5rem;
+    border-radius: .75rem;
+    z-index: var(--z-normal);
 `;
 
 const ClockLogo = styled.a`
