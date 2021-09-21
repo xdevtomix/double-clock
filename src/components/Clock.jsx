@@ -135,15 +135,15 @@ export default function Clock() {
 
                     <AnalogCenter data-component="analog-center" />
 
-                    <AnalogHoursContainer data-component="analog-hours-container" hoursDeg={hoursDeg}>
-                        <AnalogHoursHand data-component="analog-hours-hand" />
-                    </AnalogHoursContainer>
-                    <AnalogMinutesContainer data-component="analog-minutes-container" minutesDeg={minutesDeg}>
-                        <AnalogMinutesHand data-component="analog-minutes-hand" />
-                    </AnalogMinutesContainer>
-                    <AnalogSecondsContainer data-component="analog-seconds-container" secondsDeg={secondsDeg}>
-                        <AnalogSecondsHand data-component="analog-seconds-hand" />
-                    </AnalogSecondsContainer>
+                    <AnalogHandContainer data-component="analog-hours-container" width="140px" height="140px" deg={hoursDeg}>
+                        <AnalogHand data-component="analog-hand" which="hours" width=".25rem" height="70px" />
+                    </AnalogHandContainer>
+                    <AnalogHandContainer data-component="analog-minutes-container" width="190px" height="190px" deg={minutesDeg}>
+                        <AnalogHand data-component="analog-hand" which="minutes" width=".25rem" height="95px" />
+                    </AnalogHandContainer>
+                    <AnalogHandContainer data-component="analog-seconds-container" width="180px" height="180px" deg={secondsDeg}>
+                        <AnalogHand data-component="analog-hand" which="seconds" width=".125rem" height="90px" />
+                    </AnalogHandContainer>
 
                     <div className="clock__theme">
                         <i className='bx bxs-moon' id="theme-button"></i>
@@ -186,8 +186,8 @@ const TwoClocks = styled.div`
 
 const Analog = styled.div`
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 260px;
+    height: 260px;
     box-shadow: -6px -6px 16px var(--white-color), 
                 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
                 inset 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
@@ -226,56 +226,20 @@ const AnalogCenter = styled.div`
     z-index: var(--z-tooltip);
 `;
 
-const AnalogHoursContainer = styled.div`
+const AnalogHandContainer = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
-    width: 105px;
-    height: 105px;
-    ${(props) => `transform: rotateZ(${props.hoursDeg}deg)`}
+    width: ${({width}) => `${width}`};
+    height: ${({height}) => `${height}`};
+    ${(props) => `transform: rotateZ(${props.deg}deg)`}
 `;
 
-const AnalogHoursHand = styled.div`
+const AnalogHand = styled.div`
     position: absolute;
-    background-color: var(--text-color);
-    width: .25rem;
-    height: 3rem;
-    border-radius: .75rem;
-    z-index: var(--z-normal);
-`;
-
-const AnalogMinutesContainer = styled.div`
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    width: 136px;
-    height: 136px;
-    ${(props) => `transform: rotateZ(${props.minutesDeg}deg)`}
-`;
-
-const AnalogMinutesHand = styled.div`
-    position: absolute;
-    background-color: var(--text-color);
-    width: .25rem;
-    height: 4rem;
-    border-radius: .75rem;
-    z-index: var(--z-normal);
-`;
-
-const AnalogSecondsContainer = styled.div`
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    width: 130px;
-    height: 130px;
-    ${(props) => `transform: rotateZ(${props.secondsDeg}deg)`}
-`;
-
-const AnalogSecondsHand = styled.div`
-    position: absolute;
-    background-color: var(--first-color);
-    width: .125rem;
-    height: 5rem;
+    background-color: ${({which}) => which === 'seconds' ? 'var(--first-color)' : 'var(--text-color)'};
+    width: ${({width}) => `${width}`};
+    height: ${({height}) => `${height}`};
     border-radius: .75rem;
     z-index: var(--z-normal);
 `;
