@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styled from 'styled-components';
 
 export default function Clock() {
     useEffect(() => {
@@ -158,8 +159,24 @@ export default function Clock() {
                     </div>
                 </div>
 
-                <a href="https://www.youtube.com/c/Bedimcode/" target="_blank" className="clock__logo">Bedimcode</a>
+                <ClockLogo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</ClockLogo>
             </div>
         </div>
     );
 }
+
+const ClockLogo = styled.a`
+    width: max-content;
+    justify-self: center;
+    margin-bottom: var(--mb-2-5);
+    font-size: var(--smaller-font-size);
+    font-weight: var(--font-medium);
+    color: var(--text-color-light);
+    transition: .3s;
+    &:hover {
+        color: var(--first-color);
+    }
+    @media screen and (min-width: 968px) {
+        margin-bottom: 3rem;
+    }
+`;
