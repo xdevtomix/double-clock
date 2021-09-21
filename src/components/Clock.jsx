@@ -181,7 +181,7 @@ const TwoClocks = styled.div`
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
-    height: 90%;
+    height: 100%;
 `;
 
 const Analog = styled.div`
@@ -297,6 +297,8 @@ const DigitalDate = styled.div`
 `;
 
 const Logo = styled.a`
+    position : fixed;
+    bottom : 1rem;
     width: 100%;
     height: 10%;
     display: flex;
