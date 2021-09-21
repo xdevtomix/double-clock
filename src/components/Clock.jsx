@@ -126,15 +126,16 @@ export default function Clock() {
 
     return (
         <Container data-component="clock">
-            <div className="clock__container grid">
-                <div className="clock__content grid">
-                    <div className="clock__circle">
+            <ClockContainer>
+                <ClockContent>
+                    <ClockCircle className="clock__circle">                     {/* class to be removed */}
                         <ClockLine which="twelve"></ClockLine>
                         <ClockLine which="three"></ClockLine>
                         <ClockLine which="six"></ClockLine>
                         <ClockLine which="nine"></ClockLine>
 
-                        <div className="clock__rounder"></div>
+                        <ClockCenter />
+
                         <ClockHoursContainer hoursDeg={hoursDeg}>
                             <ClockHoursHand />
                         </ClockHoursContainer>
@@ -148,7 +149,7 @@ export default function Clock() {
                         <div className="clock__theme">
                             <i className='bx bxs-moon' id="theme-button"></i>
                         </div>
-                    </div>
+                    </ClockCircle>
 
                     <div>
                         <div className="clock__text">
@@ -163,10 +164,10 @@ export default function Clock() {
                             <span id="date-year"></span>
                         </div>
                     </div>
-                </div>
+                </ClockContent>
 
                 <ClockLogo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</ClockLogo>
-            </div>
+            </ClockContainer>
         </Container>
     );
 }
@@ -179,6 +180,33 @@ const Container = styled.div`
         margin-left: auto;
         margin-right: auto;
     }
+`;
+
+const ClockContainer = styled.div`
+    display: grid;
+    height: 100vh;
+    grid-template-rows: 1fr max-content;
+`;
+
+const ClockContent = styled.div`
+    display: grid;
+    align-self: center;
+    row-gap: 3.5rem;
+`;
+
+const ClockCircle = styled.div`
+    position: relative;
+    width: 200px;
+    height: 200px;
+    box-shadow: -6px -6px 16px var(--white-color), 
+                6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
+                inset 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
+                inset -6px -6px 16px var(--white-color);
+    border-radius: 50%;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const ClockLine = styled.div`
@@ -197,6 +225,15 @@ const ClockLine = styled.div`
             return 'left: .75rem; top: 50%;';
         }
     }}  
+`;
+
+const ClockCenter = styled.div`
+    width: .75rem;
+    height: .75rem;
+    background-color: var(--first-color);
+    border-radius: 50%;
+    border: 2px solid var(--body-color);
+    z-index: var(--z-tooltip);
 `;
 
 const ClockHoursContainer = styled.div`
