@@ -119,7 +119,7 @@ export default function Clock() {
     }, []);
 
     return (
-        <div data-component="clock" className="clock container">
+        <Container data-component="clock">
             <div className="clock__container grid">
                 <div className="clock__content grid">
                     <div className="clock__circle">
@@ -161,9 +161,19 @@ export default function Clock() {
 
                 <ClockLogo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</ClockLogo>
             </div>
-        </div>
+        </Container>
     );
 }
+
+const Container = styled.div`
+    max-width: 968px;
+    margin-left: var(--mb-1);
+    margin-right: var(--mb-1);
+    @media screen and (min-width: 968px) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+`;
 
 const ClockLogo = styled.a`
     width: max-content;

@@ -96,12 +96,6 @@ a {
 }
 
 /*=============== REUSABLE CSS CLASSES ===============*/
-.container {
-  max-width: 968px;
-  margin-left: var(--mb-1);
-  margin-right: var(--mb-1);
-}
-
 .grid {
   display: grid;
 }
@@ -249,13 +243,4 @@ a {
   text-align: center;
   font-size: var(--small-font-size);
   font-weight: var(--font-medium);
-}
-
-/*=============== MEDIA QUERIES ===============*/
-/* For large devices */
-@media screen and (min-width: 968px) {
-  .container {
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
