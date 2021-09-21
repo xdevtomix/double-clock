@@ -189,8 +189,7 @@ a {
   height: 105px;
 }
 
-.clock__hour::before {
-  content: '';
+.clock__hour_inner {
   position: absolute;
   background-color: var(--text-color);
   width: .25rem;
@@ -204,8 +203,7 @@ a {
   height: 136px;
 }
 
-.clock__minutes::before {
-  content: '';
+.clock__minutes_inner {
   position: absolute;
   background-color: var(--text-color);
   width: .25rem;
@@ -219,8 +217,7 @@ a {
   height: 130px;
 }
 
-.clock__seconds::before {
-  content: '';
+.clock__seconds_inner {
   position: absolute;
   background-color: var(--first-color);
   width: .125rem;

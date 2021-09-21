@@ -20,7 +20,10 @@ export default function Clock() {
             seconds.style.transform = `rotateZ(${ss}deg)`
         }
         setInterval(clock, 1000) // 1000 = 1s
+        return () => { };
+    }, []);
 
+    useEffect(() => {
         /*==================== CLOCK & DATE TEXT ====================*/
         const textHour = document.getElementById('text-hour'),
             textMinutes = document.getElementById('text-minutes'),
@@ -125,9 +128,15 @@ export default function Clock() {
                         <span className="clock__nine"></span>
 
                         <div className="clock__rounder"></div>
-                        <div className="clock__hour" id="clock-hour"></div>
-                        <div className="clock__minutes" id="clock-minutes"></div>
-                        <div className="clock__seconds" id="clock-seconds"></div>
+                        <div className="clock__hour" id="clock-hour">
+                            <div className="clock__hour_inner"></div>
+                        </div>
+                        <div className="clock__minutes" id="clock-minutes">
+                            <div className="clock__minutes_inner"></div>
+                        </div>
+                        <div className="clock__seconds" id="clock-seconds">
+                            <div className="clock__seconds_inner"></div>
+                        </div>
 
                         <div className="clock__theme">
                             <i className='bx bxs-moon' id="theme-button"></i>
