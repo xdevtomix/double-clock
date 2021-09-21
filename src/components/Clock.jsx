@@ -126,75 +126,65 @@ export default function Clock() {
 
     return (
         <Container data-component="clock">
-            <ClockContainer>
-                <ClockContent>
-                    <ClockCircle className="clock__circle">                     {/* class to be removed */}
-                        <ClockLine which="twelve"></ClockLine>
-                        <ClockLine which="three"></ClockLine>
-                        <ClockLine which="six"></ClockLine>
-                        <ClockLine which="nine"></ClockLine>
+            <TwoClocks data-component="two-clocks">
+                <Analog data-component="analog" className="clock__circle">                     {/* class to be removed */}
+                    <AnalogLine data-component="analog-line" which="twelve"></AnalogLine>
+                    <AnalogLine data-component="analog-line" which="three"></AnalogLine>
+                    <AnalogLine data-component="analog-line" which="six"></AnalogLine>
+                    <AnalogLine data-component="analog-line" which="nine"></AnalogLine>
 
-                        <ClockCenter />
+                    <AnalogCenter data-component="analog-center" />
 
-                        <ClockHoursContainer hoursDeg={hoursDeg}>
-                            <ClockHoursHand />
-                        </ClockHoursContainer>
-                        <ClockMinutesContainer minutesDeg={minutesDeg}>
-                            <ClockMinutesHand />
-                        </ClockMinutesContainer>
-                        <ClockSecondsContainer secondsDeg={secondsDeg}>
-                            <ClockSecondsHand />
-                        </ClockSecondsContainer>
+                    <AnalogHoursContainer data-component="analog-hours-container" hoursDeg={hoursDeg}>
+                        <AnalogHoursHand data-component="analog-hours-hand" />
+                    </AnalogHoursContainer>
+                    <AnalogMinutesContainer data-component="analog-minutes-container" minutesDeg={minutesDeg}>
+                        <AnalogMinutesHand data-component="analog-minutes-hand" />
+                    </AnalogMinutesContainer>
+                    <AnalogSecondsContainer data-component="analog-seconds-container" secondsDeg={secondsDeg}>
+                        <AnalogSecondsHand data-component="analog-seconds-hand" />
+                    </AnalogSecondsContainer>
 
-                        <div className="clock__theme">
-                            <i className='bx bxs-moon' id="theme-button"></i>
-                        </div>
-                    </ClockCircle>
-
-                    <div>
-                        <div className="clock__text">
-                            <div className="clock__text-hour" id="text-hour"></div>
-                            <div className="clock__text-minutes" id="text-minutes"></div>
-                            <div className="clock__text-ampm" id="text-ampm"></div>
-                        </div>
-
-                        <div className="clock__date">
-                            <span id="date-day"></span>
-                            <span id="date-month"></span>
-                            <span id="date-year"></span>
-                        </div>
+                    <div className="clock__theme">
+                        <i className='bx bxs-moon' id="theme-button"></i>
                     </div>
-                </ClockContent>
+                </Analog>
 
-                <ClockLogo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</ClockLogo>
-            </ClockContainer>
+                <Digital data-component="digital">
+                    <DigitalTime data-component="digital-time" className="clock__text">
+                        <div className="clock__text-hour" id="text-hour"></div>
+                        <div className="clock__text-minutes" id="text-minutes"></div>
+                        <div className="clock__text-ampm" id="text-ampm"></div>
+                    </DigitalTime>
+
+                    <DigitalDate data-component="digital-date" className="clock__date">
+                        <span id="date-day"></span>
+                        <span id="date-month"></span>
+                        <span id="date-year"></span>
+                    </DigitalDate>
+                </Digital>
+            </TwoClocks>
+
+            <Logo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</Logo>
         </Container>
     );
 }
 
 const Container = styled.div`
-    max-width: 968px;
-    margin-left: var(--mb-1);
-    margin-right: var(--mb-1);
-    @media screen and (min-width: 968px) {
-        margin-left: auto;
-        margin-right: auto;
-    }
+    width: 100%;
+    height: 100%;
 `;
 
-const ClockContainer = styled.div`
-    display: grid;
-    height: 100vh;
-    grid-template-rows: 1fr max-content;
+const TwoClocks = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 90%;
 `;
 
-const ClockContent = styled.div`
-    display: grid;
-    align-self: center;
-    row-gap: 3.5rem;
-`;
-
-const ClockCircle = styled.div`
+const Analog = styled.div`
     position: relative;
     width: 200px;
     height: 200px;
@@ -209,12 +199,12 @@ const ClockCircle = styled.div`
     align-items: center;
 `;
 
-const ClockLine = styled.div`
+const AnalogLine = styled.div`
     position: absolute;
     width: 1rem;
     height: 1px;
     background-color: var(--text-color-light);
-    ${({which}) => {
+    ${({ which }) => {
         if (which === 'twelve') {
             return 'top: 1.25rem; left: 50%; transform: translateX(-50%) rotate(90deg);';
         } else if (which === 'three') {
@@ -227,7 +217,7 @@ const ClockLine = styled.div`
     }}  
 `;
 
-const ClockCenter = styled.div`
+const AnalogCenter = styled.div`
     width: .75rem;
     height: .75rem;
     background-color: var(--first-color);
@@ -236,7 +226,7 @@ const ClockCenter = styled.div`
     z-index: var(--z-tooltip);
 `;
 
-const ClockHoursContainer = styled.div`
+const AnalogHoursContainer = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
@@ -245,7 +235,7 @@ const ClockHoursContainer = styled.div`
     ${(props) => `transform: rotateZ(${props.hoursDeg}deg)`}
 `;
 
-const ClockHoursHand = styled.div`
+const AnalogHoursHand = styled.div`
     position: absolute;
     background-color: var(--text-color);
     width: .25rem;
@@ -254,7 +244,7 @@ const ClockHoursHand = styled.div`
     z-index: var(--z-normal);
 `;
 
-const ClockMinutesContainer = styled.div`
+const AnalogMinutesContainer = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
@@ -263,7 +253,7 @@ const ClockMinutesContainer = styled.div`
     ${(props) => `transform: rotateZ(${props.minutesDeg}deg)`}
 `;
 
-const ClockMinutesHand = styled.div`
+const AnalogMinutesHand = styled.div`
     position: absolute;
     background-color: var(--text-color);
     width: .25rem;
@@ -272,7 +262,7 @@ const ClockMinutesHand = styled.div`
     z-index: var(--z-normal);
 `;
 
-const ClockSecondsContainer = styled.div`
+const AnalogSecondsContainer = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
@@ -281,7 +271,7 @@ const ClockSecondsContainer = styled.div`
     ${(props) => `transform: rotateZ(${props.secondsDeg}deg)`}
 `;
 
-const ClockSecondsHand = styled.div`
+const AnalogSecondsHand = styled.div`
     position: absolute;
     background-color: var(--first-color);
     width: .125rem;
@@ -290,18 +280,33 @@ const ClockSecondsHand = styled.div`
     z-index: var(--z-normal);
 `;
 
-const ClockLogo = styled.a`
-    width: max-content;
-    justify-self: center;
-    margin-bottom: var(--mb-2-5);
+const Digital = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const DigitalTime = styled.div`
+
+`;
+
+const DigitalDate = styled.div`
+
+`;
+
+const Logo = styled.a`
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--smaller-font-size);
     font-weight: var(--font-medium);
     color: var(--text-color-light);
     transition: .3s;
     &:hover {
         color: var(--first-color);
-    }
-    @media screen and (min-width: 968px) {
-        margin-bottom: 3rem;
     }
 `;
