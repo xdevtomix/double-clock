@@ -50,21 +50,6 @@ body.dark-theme {
   --body-color: hsl(var(--hue-color), 10%, 16%);
 }
 
-/*========== Button Dark/Light ==========*/
-.clock__theme {
-  position: absolute;
-  top: -1rem;
-  right: -1rem;
-  display: flex;
-  padding: .25rem;
-  border-radius: 50%;
-  box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1), 
-              inset 1px 1px 1px hsla(var(--hue-color), 30%, 86%, 1);
-  color: var(--first-color);
-  cursor: pointer;
-}
-
-/*========== Box shadow Dark theme ==========*/
 .dark-theme .clock__circle {
   box-shadow: 6px 6px 16px hsla(var(--hue-color), 8%, 12%, 1), 
               -6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1), 

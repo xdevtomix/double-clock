@@ -6,6 +6,8 @@ export default function Clock() {
     const [minutesDeg, setMinutesDeg] = useState(0);
     const [secondsDeg, setSecondsDeg] = useState(0);
 
+    const [theme, setTheme] = useState('');
+
     useEffect(() => {
         let intervalId = -1;
 
@@ -91,38 +93,30 @@ export default function Clock() {
         setInterval(clockText, 1000) // 1000 = 1s
 
         clockText();
-        /*==================== DARK/LIGHT THEME ====================*/
-        const themeButton = document.getElementById('theme-button')
-        const darkTheme = 'dark-theme'
-        const iconTheme = 'bxs-sun'
 
-        // Previously selected topic (if user selected)
-        const selectedTheme = localStorage.getItem('selected-theme')
-        const selectedIcon = localStorage.getItem('selected-icon')
-
-        // We obtain the current theme that the interface has by validating the dark-theme class
-        const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
-        const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bxs-moon' : 'bxs-sun'
-
-        // We validate if the user previously chose a topic
-        if (selectedTheme) {
-            // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
-            document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
-            themeButton.classList[selectedIcon === 'bxs-moon' ? 'add' : 'remove'](iconTheme)
-        }
-
-        // Activate / deactivate the theme manually with the button
-        themeButton.addEventListener('click', () => {
-            // Add or remove the dark / icon theme
-            document.body.classList.toggle(darkTheme)
-            themeButton.classList.toggle(iconTheme)
-            // We save the theme and the current icon that the user chose
-            localStorage.setItem('selected-theme', getCurrentTheme())
-            localStorage.setItem('selected-icon', getCurrentIcon())
-        })
+        const iconTheme = 'bxs-sun' // sun moon
 
         return () => { };
     }, []);
+
+    useEffect(() => {
+        setTheme(() => {
+            const storedTheme = localStorage.getItem('theme');
+            document.body.classList[storedTheme === 'dark' ? 'add' : 'remove']('dark-theme');
+            return storedTheme || 'light';
+        });
+
+        return () => {};
+    }, []);
+
+    const toggleTheme = () => {
+        setTheme((t) => {
+            const newTheme = t === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            document.body.classList[newTheme === 'dark' ? 'add' : 'remove']('dark-theme');
+            return newTheme;
+        });
+    };
 
     return (
         <Container data-component="clock">
@@ -144,10 +138,6 @@ export default function Clock() {
                     <AnalogHandContainer data-component="analog-seconds-container" width="180px" height="180px" deg={secondsDeg}>
                         <AnalogHand data-component="analog-hand" which="seconds" width=".125rem" height="90px" />
                     </AnalogHandContainer>
-
-                    <div className="clock__theme">
-                        <i className='bx bxs-moon' id="theme-button"></i>
-                    </div>
                 </Analog>
 
                 <Digital data-component="digital">
@@ -165,6 +155,10 @@ export default function Clock() {
                 </Digital>
             </TwoClocks>
 
+            <ThemeSwitcher>
+                <i className={`bx ${theme === 'dark' ? 'bxs-moon' : 'bxs-sun'}`} onClick={() => toggleTheme()}></i>
+            </ThemeSwitcher>
+            
             <Logo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</Logo>
         </Container>
     );
@@ -258,6 +252,19 @@ const DigitalTime = styled.div`
 
 const DigitalDate = styled.div`
 
+`;
+
+const ThemeSwitcher = styled.div`
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    padding: .25rem;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1), 
+                inset 1px 1px 1px hsla(var(--hue-color), 30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
 `;
 
 const Logo = styled.a`
