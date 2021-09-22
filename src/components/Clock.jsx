@@ -106,7 +106,7 @@ export default function Clock() {
             return storedTheme || 'light';
         });
 
-        return () => {};
+        return () => { };
     }, []);
 
     const toggleTheme = () => {
@@ -121,7 +121,7 @@ export default function Clock() {
     return (
         <Container data-component="clock">
             <TwoClocks data-component="two-clocks">
-                <Analog data-component="analog" className="clock__circle">                     {/* class to be removed */}
+                <Analog data-component="analog" theme={theme}>
                     <AnalogLine data-component="analog-line" which="twelve"></AnalogLine>
                     <AnalogLine data-component="analog-line" which="three"></AnalogLine>
                     <AnalogLine data-component="analog-line" which="six"></AnalogLine>
@@ -155,10 +155,10 @@ export default function Clock() {
                 </Digital>
             </TwoClocks>
 
-            <ThemeSwitcher>
+            <ThemeSwitcher theme={theme}>
                 <i className={`bx ${theme === 'dark' ? 'bxs-moon' : 'bxs-sun'}`} onClick={() => toggleTheme()}></i>
             </ThemeSwitcher>
-            
+
             <Logo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</Logo>
         </Container>
     );
@@ -182,10 +182,23 @@ const Analog = styled.div`
     position: relative;
     width: 260px;
     height: 260px;
-    box-shadow: -6px -6px 16px var(--white-color), 
+    box-shadow: ${({ theme }) => {
+        if (theme === 'light') {
+            return `
+                -6px -6px 16px var(--white-color), 
                 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
                 inset 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
                 inset -6px -6px 16px var(--white-color);
+            `;
+        } else {
+            return `
+                6px 6px 16px hsla(var(--hue-color), 8%, 12%, 1), 
+                -6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1), 
+                inset -6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1), 
+                inset 6px 6px 12px hsla(var(--hue-color), 8%, 12%, 1);
+            `;
+        }
+    }}
     border-radius: 50%;
     justify-self: center;
     display: flex;
@@ -224,16 +237,16 @@ const AnalogHandContainer = styled.div`
     position: absolute;
     display: flex;
     justify-content: center;
-    width: ${({width}) => `${width}`};
-    height: ${({height}) => `${height}`};
+    width: ${({ width }) => `${width}`};
+    height: ${({ height }) => `${height}`};
     ${(props) => `transform: rotateZ(${props.deg}deg)`}
 `;
 
 const AnalogHand = styled.div`
     position: absolute;
-    background-color: ${({which}) => which === 'seconds' ? 'var(--first-color)' : 'var(--text-color)'};
-    width: ${({width}) => `${width}`};
-    height: ${({height}) => `${height}`};
+    background-color: ${({ which }) => which === 'seconds' ? 'var(--first-color)' : 'var(--text-color)'};
+    width: ${({ width }) => `${width}`};
+    height: ${({ height }) => `${height}`};
     border-radius: .75rem;
     z-index: var(--z-normal);
 `;
@@ -261,8 +274,19 @@ const ThemeSwitcher = styled.div`
     display: flex;
     padding: .25rem;
     border-radius: 50%;
-    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1), 
+    box-shadow: ${({ theme }) => {
+        if (theme === 'light') {
+            return `
+                inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1), 
                 inset 1px 1px 1px hsla(var(--hue-color), 30%, 86%, 1);
+            `;
+        } else {
+            return `
+                inset -1px -1px 1px hsla(var(--hue-color), 8%, 20%, 1), 
+                inset 1px 1px 1px hsla(var(--hue-color), 8%, 12%, 1);
+            `;
+        }
+    }}    
     color: var(--first-color);
     cursor: pointer;
 `;
