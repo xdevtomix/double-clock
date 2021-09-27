@@ -110,7 +110,7 @@ export default function Clock() {
                 <i className={`bx ${theme === 'dark' ? 'bxs-moon' : 'bxs-sun'}`} onClick={() => toggleTheme()}></i>
             </ThemeSwitcher>
 
-            <Logo href="https://www.youtube.com/c/Bedimcode/" target="_blank">Original design: Bedimcode</Logo>
+            <Logo href="https://www.youtube.com/c/Bedimcode/" target="_blank" rel="noopener">Original design: Bedimcode</Logo>
         </Container>
     );
 }
@@ -269,6 +269,7 @@ const Logo = styled.a`
     font-size: var(--smaller-font-size);
     font-weight: var(--font-medium);
     color: var(--text-color-light);
+    text-decoration: none;
     transition: .3s;
     &:hover {
         color: var(--first-color);
